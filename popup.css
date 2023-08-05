@@ -1,0 +1,16 @@
+body{
+    min-height: fit-content;
+    min-width: 200px;
+}
+
+.header{
+    text-align: center;
+    font-size: large;
+}
+
+.logo{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+}
