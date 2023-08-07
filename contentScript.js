@@ -7,7 +7,7 @@ var observer = new MutationObserver(function(mutations, observer) {
     changePostButtons();
     changeSeeNewPostsButton();
 });
-observer.observe(document.body, {childList});
+observer.observe(document.body, {subtree: true, childList: true});
 
 chrome.runtime.onMessage.addListener(function (message) {
     if (message.eventType === "tabTitleChange") {
