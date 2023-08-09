@@ -54,7 +54,7 @@ function changeTabLogo(){
 }
 
 function changeTabTitle(){
-    const regex = / X\b/g;
+    const regex = /X\b/g;
     const title = document.querySelector("title");
     const replacement = " Twitter";
     const result = title.innerHTML.replace(regex, replacement);
