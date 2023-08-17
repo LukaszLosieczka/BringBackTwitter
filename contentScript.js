@@ -6,6 +6,7 @@ var observer = new MutationObserver(function(mutations, observer) {
     changeTwitterLogo();
     changePostButtons();
     changeSeeNewPostsButton();
+    changeLoginLogo();
 });
 observer.observe(document.body, {subtree: true, childList: true});
 
@@ -78,5 +79,20 @@ function changeSeeNewPostsButton(){
     if(button && button.getAttribute("changed") !== "true"){
         button.innerHTML = "tweeted";
         button.setAttribute("changed", "true");
+    }
+}
+
+function changeLoginLogo(){
+    const container = document.getElementsByClassName("r-u9bbvc")[0];
+    if(container && container.getAttribute("changed") !== "true"){
+        container.innerHTML = '';
+        const twitterLogoIcon = document.createElement('img');
+        twitterLogoIcon.src = chrome.runtime.getURL("assets/twitter-logo.png");
+        twitterLogoIcon.style.width = '310px';
+        twitterLogoIcon.style.height = '310px';
+        twitterLogoIcon.style.display = 'block';
+        twitterLogoIcon.style.margin = 'auto';
+        container.appendChild(twitterLogoIcon);
+        container.setAttribute("changed", "true");
     }
 }
