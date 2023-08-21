@@ -1,12 +1,13 @@
 
 MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
+const xPath = "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
 
 var observer = new MutationObserver(function(mutations, observer) {
     changeTwitterLogo();
     changePostButtons();
     changeSeeNewPostsButton();
-    changeLoginLogo();
+    changeLoginPageLogo();
 });
 observer.observe(document.body, {subtree: true, childList: true});
 
@@ -82,17 +83,33 @@ function changeSeeNewPostsButton(){
     }
 }
 
-function changeLoginLogo(){
-    const container = document.getElementsByClassName("r-u9bbvc")[0];
+function changeLoginPageLogo(){
+    const originalLogo = document.querySelector(`path[d=${CSS.escape(xPath)}]`);
+    if(!originalLogo) return;
+    let container = originalLogo.parentNode;
+    while(container.nodeName !== "DIV"){
+        container = container.parentNode;
+    }
+    if(container && container.children[1] && container.children[1].tagName === "svg" && container.children[1].style.display !== "none"){
+        container.removeChild(container.firstChild);
+        container.setAttribute("changed", "false");
+    }
     if(container && container.getAttribute("changed") !== "true"){
-        container.innerHTML = '';
         const twitterLogoIcon = document.createElement('img');
         twitterLogoIcon.src = chrome.runtime.getURL("assets/twitter-logo.png");
-        twitterLogoIcon.style.width = '310px';
-        twitterLogoIcon.style.height = '310px';
+        let originalWidth = originalLogo.parentNode.parentNode.getBoundingClientRect().width;
+        if(originalWidth > 100){
+            originalWidth = 450;
+            twitterLogoIcon.style.margin = "auto";
+            const otherLogo = document.querySelector("div[changed='true']");
+            if(otherLogo) otherLogo.firstChild.style.display = "none";
+        }
+        twitterLogoIcon.style.width = `${originalWidth}px`;
+        twitterLogoIcon.style.height = 'auto';
+        twitterLogoIcon.style.maxWidth = '100%';
         twitterLogoIcon.style.display = 'block';
-        twitterLogoIcon.style.margin = 'auto';
-        container.appendChild(twitterLogoIcon);
+        container.firstChild.style.display = 'none';
+        container.insertBefore(twitterLogoIcon, container.firstChild);
         container.setAttribute("changed", "true");
     }
 }
