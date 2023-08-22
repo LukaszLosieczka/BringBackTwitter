@@ -4,25 +4,20 @@ MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 const xPath = "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
 
 var observer = new MutationObserver(function(mutations, observer) {
-    changeTwitterLogo();
+    changeMainLogo();
     changePostButtons();
     changeSeeNewPostsButton();
-    changeLoginPageLogo();
+    changeAllTwitterLogo();
+    changeTabTitle();
 });
 observer.observe(document.body, {subtree: true, childList: true});
-
-chrome.runtime.onMessage.addListener(function (message) {
-    if (message.eventType === "tabTitleChange") {
-        changeTabTitle();
-    }
-});
 
 changeLoadingPlaceHolder();
 changeTabLogo();
 
 
 
-function changeTwitterLogo() {
+function changeMainLogo() {
     const xLogo = document.querySelector("a[aria-label~=Twitter] > div");
     if(!xLogo || xLogo.getAttribute("changed") === "true") return;
     xLogo.innerHTML = '';
@@ -56,10 +51,12 @@ function changeTabLogo(){
 }
 
 function changeTabTitle(){
-    const regex = /X\b/g;
     const title = document.querySelector("title");
+    if(!title) return;
+    const regex = /X\b/g;
     const replacement = " Twitter";
     const result = title.innerHTML.replace(regex, replacement);
+    if(result === title.innerHTML) return;
     title.innerHTML = result;
 }
 
@@ -83,18 +80,23 @@ function changeSeeNewPostsButton(){
     }
 }
 
-function changeLoginPageLogo(){
-    const originalLogo = document.querySelector(`path[d=${CSS.escape(xPath)}]`);
-    if(!originalLogo) return;
+function changeAllTwitterLogo(){
+    const originalLogos = document.querySelectorAll(`path[d=${CSS.escape(xPath)}]`);
+    if(originalLogos.length === 0) return;
+    originalLogos.forEach((originalLogo) => changeTwitterLogo(originalLogo));
+}
+
+function changeTwitterLogo(originalLogo){
     let container = originalLogo.parentNode;
     while(container.nodeName !== "DIV"){
         container = container.parentNode;
     }
-    if(container && container.children[1] && container.children[1].tagName === "svg" && container.children[1].style.display !== "none"){
+    if(!container) return;
+    if(container.children[1] && container.children[1].tagName === "svg" && container.children[1].style.display !== "none"){
         container.removeChild(container.firstChild);
         container.setAttribute("changed", "false");
     }
-    if(container && container.getAttribute("changed") !== "true"){
+    if(container.getAttribute("changed") !== "true"){
         const twitterLogoIcon = document.createElement('img');
         twitterLogoIcon.src = chrome.runtime.getURL("assets/twitter-logo.png");
         let originalWidth = originalLogo.parentNode.parentNode.getBoundingClientRect().width;
