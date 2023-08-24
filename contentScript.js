@@ -18,7 +18,7 @@ changeTabLogo();
 
 
 function changeMainLogo() {
-    const xLogo = document.querySelector("a[aria-label~=Twitter] > div");
+    const xLogo = document.querySelector("a[aria-label~=X] > div");
     if(!xLogo || xLogo.getAttribute("changed") === "true") return;
     xLogo.innerHTML = '';
     const twitterLogoIcon = document.createElement('img');
