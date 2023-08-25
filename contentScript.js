@@ -133,7 +133,7 @@ function changeVerifiedButton(){
     if(!verifiedButton || verifiedButton.getAttribute("changed") === "true") return;
     verifiedButton.innerHTML = "";
     const verifiedLogo = document.createElement('img');
-    verifiedLogo.src = chrome.runtime.getURL("assets/verified-logo29.png");
+    verifiedLogo.src = chrome.runtime.getURL("assets/verified-logo27.png");
     verifiedButton.appendChild(verifiedLogo);
     verifiedButton.setAttribute("changed", "true");
 }
