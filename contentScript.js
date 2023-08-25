@@ -9,6 +9,7 @@ var observer = new MutationObserver(function(mutations, observer) {
     changeSeeNewPostsButton();
     changeAllTwitterLogo();
     changeTabTitle();
+    unmuteVideos();
 });
 observer.observe(document.body, {subtree: true, childList: true});
 
@@ -114,4 +115,13 @@ function changeTwitterLogo(originalLogo){
         container.insertBefore(twitterLogoIcon, container.firstChild);
         container.setAttribute("changed", "true");
     }
+}
+
+function unmuteVideos(){
+    chrome.storage.local.get(["options"], function(result) {
+        if(!result.options) return;
+        const options = JSON.parse(result.options);
+        const unmuteButton = document.querySelector("div[aria-label='Unmute']");
+        if(unmuteButton && options.unmute) unmuteButton.click();
+    });
 }
