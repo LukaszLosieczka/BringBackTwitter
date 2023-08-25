@@ -7,8 +7,9 @@ var observer = new MutationObserver(function(mutations, observer) {
     changeMainLogo();
     changePostButtons();
     changeSeeNewPostsButton();
-    changeAllTwitterLogo();
     changeTabTitle();
+    changeVerifiedButton();
+    changeAllTwitterLogo();
     unmuteVideos();
 });
 observer.observe(document.body, {subtree: true, childList: true});
@@ -124,4 +125,15 @@ function unmuteVideos(){
         const unmuteButton = document.querySelector("div[aria-label='Unmute']");
         if(unmuteButton && options.unmute) unmuteButton.click();
     });
+}
+
+function changeVerifiedButton(){
+
+    const verifiedButton = document.querySelector("a[aria-label='Verified'] > div > div");
+    if(!verifiedButton || verifiedButton.getAttribute("changed") === "true") return;
+    verifiedButton.innerHTML = "";
+    const verifiedLogo = document.createElement('img');
+    verifiedLogo.src = chrome.runtime.getURL("assets/verified-logo29.png");
+    verifiedButton.appendChild(verifiedLogo);
+    verifiedButton.setAttribute("changed", "true");
 }
