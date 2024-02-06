@@ -130,12 +130,14 @@ function unmuteVideos(){
 }
 
 function changeVerifiedButton(){
-
     const verifiedButton = document.querySelector("a[aria-label='Premium'] > div > div");
+    const isDarkMode = document.querySelector("html").style.colorScheme === "dark";
     if(!verifiedButton || verifiedButton.getAttribute("changed") === "true") return;
     verifiedButton.innerHTML = "";
     const verifiedLogo = document.createElement('img');
-    verifiedLogo.src = chrome.runtime.getURL("assets/verified-logo.png");
+    const imageName = isDarkMode ? "assets/verified-logo-white.png" : "assets/verified-logo.png";
+    console.log(imageName);
+    verifiedLogo.src = chrome.runtime.getURL(imageName);
     verifiedLogo.style.width = '27px';
     verifiedLogo.style.height = '27px';
     verifiedButton.appendChild(verifiedLogo);

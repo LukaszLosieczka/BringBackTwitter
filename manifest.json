@@ -28,6 +28,7 @@
           "assets/twitter-logo32.png",
           "assets/twitter-logo16.png",
           "assets/verified-logo.png",
+          "assets/verified-logo-white.png",
           "assets/verified-logo27.png"
         ],
         "matches": ["https://*.twitter.com/*", "https://*.x.com/*"]
