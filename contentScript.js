@@ -24,7 +24,9 @@ function changeMainLogo() {
     if(!xLogo || xLogo.getAttribute("changed") === "true") return;
     xLogo.innerHTML = '';
     const twitterLogoIcon = document.createElement('img');
-    twitterLogoIcon.src = chrome.runtime.getURL("assets/twitter-logo32.png");
+    twitterLogoIcon.src = chrome.runtime.getURL("assets/twitter-logo.png");
+    twitterLogoIcon.style.width = '32px';
+    twitterLogoIcon.style.height = '32px';
     xLogo.appendChild(twitterLogoIcon);
     xLogo.setAttribute("changed", "true");
 }
@@ -129,11 +131,13 @@ function unmuteVideos(){
 
 function changeVerifiedButton(){
 
-    const verifiedButton = document.querySelector("a[aria-label='Verified'] > div > div");
+    const verifiedButton = document.querySelector("a[aria-label='Premium'] > div > div");
     if(!verifiedButton || verifiedButton.getAttribute("changed") === "true") return;
     verifiedButton.innerHTML = "";
     const verifiedLogo = document.createElement('img');
-    verifiedLogo.src = chrome.runtime.getURL("assets/verified-logo27.png");
+    verifiedLogo.src = chrome.runtime.getURL("assets/verified-logo.png");
+    verifiedLogo.style.width = '27px';
+    verifiedLogo.style.height = '27px';
     verifiedButton.appendChild(verifiedLogo);
     verifiedButton.setAttribute("changed", "true");
 }
