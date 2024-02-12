@@ -1,4 +1,8 @@
-![alt text](https://github.com/LukaszLosieczka/BringBackTwitter/blob/main/assets/app-logo.png)
 # Bring Back Twitter
+![BringBackTwitter Logo](https://github.com/LukaszLosieczka/BringBackTwitter/blob/main/assets/app-logo.png)
 
-## Chrome extension that returns old Twitter UI
+## Overview
+Chrome extension that returns old Twitter UI without the X logo.
+
+## Chrome Web Store 
+https://chromewebstore.google.com/detail/bring-back-twitter/linolhhakonnglhlljpkfgbgcmhlmpjb
