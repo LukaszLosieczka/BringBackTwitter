@@ -65,9 +65,9 @@ function changeTabTitle(){
 }
 
 function changePostButtons(){
-    const postButton1 = document.querySelector("div[data-testid~='tweetButtonInline'] > div > span > span");
+    const postButton1 = document.querySelector("[data-testid~='tweetButtonInline'] > div > span > span");
     const postButton2 = document.querySelector("[data-testid~='SideNav_NewTweet_Button'] > div > span > div > div > span > span");
-    const postButton3 = document.querySelector("div[data-testid~='tweetButton'] > div > span > span");
+    const postButton3 = document.querySelector("[data-testid~='tweetButton'] > div > span > span");
     [postButton1, postButton2, postButton3].forEach((button) => {
         if(button && button.getAttribute("changed") !== "true"){
             button.innerHTML = "Tweet";
