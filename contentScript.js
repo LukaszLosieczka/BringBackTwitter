@@ -10,7 +10,7 @@ var observer = new MutationObserver(function (mutations, observer) {
   changeTabTitle();
   changeVerifiedButton();
   changeAllTwitterLogo();
-  unmuteVideos();
+  //unmuteVideos();
 });
 observer.observe(document.body, { subtree: true, childList: true });
 
@@ -67,7 +67,7 @@ function changePostButtons() {
     "[data-testid~='tweetButtonInline'] > div > span > span"
   );
   const postButton2 = document.querySelector(
-    "[data-testid~='SideNav_NewTweet_Button'] > div > span > div > div > span > span"
+    "[data-testid~='SideNav_NewTweet_Button'] span > span"
   );
   const postButton3 = document.querySelector(
     "[data-testid~='tweetButton'] > div > span > span"
@@ -133,32 +133,59 @@ function changeTwitterLogo(originalLogo) {
   }
 }
 
+function isInViewport(element) {
+  const rect = element.getBoundingClientRect();
+  return (
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <=
+      (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
+}
+
 function unmuteVideos() {
-  chrome.storage.local.get(["options"], function (result) {
+  chrome.storage.local.get(["options"], async (result) => {
     if (!result.options) return;
     const options = JSON.parse(result.options);
-    const unmuteButton = document.querySelector("div[aria-label='Unmute']");
-    if (unmuteButton && options.unmute) unmuteButton.click();
+    if (!options.unmute) return;
+    const player = Array.from(
+      document.querySelectorAll("div[data-testid='videoPlayer']")
+    ).find((p) => isInViewport(p));
+    if (!player) return;
+    player.dispatchEvent(
+      new MouseEvent("mouseover", {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+      })
+    );
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    const unmuteButton = player.querySelector("button[aria-label='Unmute']");
+    if (unmuteButton) unmuteButton.click();
   });
 }
 
 function changeVerifiedButton() {
-  const verifiedButton = document.querySelector(
+  const verifiedIcon = document.querySelector(
     "a[aria-label='Premium'] > div > div"
+  );
+  const verifiedText = document.querySelector(
+    "a[aria-label='Premium'] > div > div > span"
   );
   const isDarkMode =
     document.querySelector("html").style.colorScheme === "dark";
-  if (!verifiedButton || verifiedButton.getAttribute("changed") === "true")
-    return;
-  verifiedButton.innerHTML = "";
-  const verifiedLogo = document.createElement("img");
+  if (verifiedText && verifiedText.getAttribute("changed") !== "true") {
+    verifiedText.innerHTML = "Verified";
+    verifiedText.setAttribute("changed", "true");
+  }
+  if (!verifiedIcon || verifiedIcon.getAttribute("changed") === "true") return;
+  verifiedIcon.innerHTML = "";
+  const newVerifiedIcon = document.createElement("img");
   const imageName = isDarkMode
     ? "assets/verified-badge-white.svg"
     : "assets/verified-badge.svg";
-  verifiedLogo.src = chrome.runtime.getURL(imageName);
-  verifiedButton.appendChild(verifiedLogo);
-  document.querySelector(
-    "a[aria-label='Premium'] > div > div > span"
-  ).innerHTML = "Verified";
-  verifiedButton.setAttribute("changed", "true");
+  newVerifiedIcon.src = chrome.runtime.getURL(imageName);
+  verifiedIcon.appendChild(newVerifiedIcon);
+  verifiedIcon.setAttribute("changed", "true");
 }

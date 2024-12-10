@@ -1,0 +1,22 @@
+body {
+  --twitter-blue: rgb(29, 155, 240);
+  --twitter-blue-hovered: rgb(26 140 216);
+}
+
+a[data-testid="SideNav_NewTweet_Button"],
+button[data-testid~="tweetButtonInline"],
+button[data-testid~="tweetButton"] {
+  background-color: var(--twitter-blue) !important;
+}
+
+a[data-testid="SideNav_NewTweet_Button"]:hover,
+button[data-testid~="tweetButtonInline"]:not([aria-disabled="true"]):hover,
+button[data-testid~="tweetButton"]:not([aria-disabled="true"]):hover {
+  background-color: var(--twitter-blue-hovered) !important;
+}
+
+a[data-testid~="SideNav_NewTweet_Button"] span > span,
+button[data-testid~="tweetButtonInline"] > div > span > span,
+button[data-testid~="tweetButton"] > div > span > span {
+  color: white !important;
+}
