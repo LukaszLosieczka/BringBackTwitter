@@ -30,24 +30,16 @@
     }
   ],
   "web_accessible_resources": [
-    {
-      "resources": [
-        "assets/twitter-logo.png",
-        "assets/twitter-logo128.png",
-        "assets/twitter-logo48.png",
-        "assets/twitter-logo32.png",
-        "assets/twitter-logo16.png",
-        "assets/verified-logo.png",
-        "assets/verified-logo-white.png",
-        "assets/verified-badge.svg",
-        "assets/verified-badge-white.svg",
-        "assets/verified-logo27.png"
-      ],
-      "matches": [
-        "https://*.twitter.com/*",
-        "https://*.x.com/*"
-      ]
-    }
+    "assets/twitter-logo.png",
+    "assets/twitter-logo128.png",
+    "assets/twitter-logo48.png",
+    "assets/twitter-logo32.png",
+    "assets/twitter-logo16.png",
+    "assets/verified-logo.png",
+    "assets/verified-logo-white.png",
+    "assets/verified-badge.svg",
+    "assets/verified-badge-white.svg",
+    "assets/verified-logo27.png"
   ],
   "action": {
     "default_icon": {
@@ -59,5 +51,5 @@
     "default_title": "BringBackTwitter",
     "default_popup": "popup.html"
   },
-  "manifest_version": 3
+  "manifest_version": 2
 }
